@@ -1,4 +1,5 @@
 # Magisk BootloopSaver
+
 ## About
 Protect your system from bootloop caused by Magisk modules. In case the data partition is encrypted and you cannot access `/data/adb/modules`, or you don't want to turn off **force encription** because when your phone with **force encryption** disabled is stolen, thief can copy your `/data` and your private data will be exposed!!! 
 
@@ -10,8 +11,8 @@ It's Magisk module, flash it in **Magisk** app
 
 ## Usage
 
-Automatically detect if you got bootloop (zygote keep restart)
+After flashing this module, you don't have to do anything else.  This module will do its job: detect if you have a bootloop or not (the zygote keeps rebooting over and over again)
 
-Disable all modules and restart the system if zygote keep restarting in 50s
+If yes, it will disable all modules and reboot the system.
 
-Without this module, you can also do this manually by booting into Safe mode then reboot back!
+Without this module, another way to disable all modules is to boot into Safe mode and then reboot!
