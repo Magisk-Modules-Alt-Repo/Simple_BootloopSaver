@@ -1,6 +1,6 @@
 id=huskydg_bootloopsaver
 name=Magisk Bootloop Saver
-version=v1.0
-versionCode=10000
+version=v1.1
+versionCode=10001
 author=HuskyDG
 description=Protect your system from bootloop caused by Magisk modules. Disable all modules and restart the system if zygote keep restarting in 50s
