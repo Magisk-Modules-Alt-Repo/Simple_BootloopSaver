@@ -31,8 +31,8 @@ exit
 
 
 
-
-mv -rf /cache/bootloop_saver.log /cache/bootloop_saver.log.bak 2>/dev/null
+rm -rf /cache/bootloop_saver.log.bak
+mv -f /cache/bootloop_saver.log /cache/bootloop_saver.log.bak 2>/dev/null
 write_log "bootloop saver started"
 MAIN_ZYGOTE_NICENAME=zygote
 CPU_ABI=$(getprop ro.product.cpu.api)
