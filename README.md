@@ -11,8 +11,4 @@ It's Magisk module, flash it in **Magisk** app
 
 ## Usage
 
-After flashing this module, you don't have to do anything else.  This module will do its job: detect if you have a bootloop or not (the zygote keeps rebooting over and over again)
-
-If yes, it will disable all modules and reboot the system.
-
-Without this module, another way to disable all modules is to boot into Safe mode and then reboot!
+- Usually, bootloop occurs because zygote doesn't start properly or stuck at restarting. The script run in `late_start` mode. It will check Zygote's Process ID 3 times every 15 seconds.  And if Zygote's Process ID doesn't match for 3 times, check the Process ID for next 15 seconds to make sure and if it's different again, the script will disable all modules and reboot the phone  your.
