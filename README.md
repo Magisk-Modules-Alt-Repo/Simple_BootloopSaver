@@ -19,5 +19,5 @@ You can boot into **TWRP** and create a dummy file named `disable_magisk` in one
 - /cache
 - /data/unencrypted
 - /metadata
-- /presist
-- /mnt/vendor/presist
+- /persist
+- /mnt/vendor/persist

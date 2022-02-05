@@ -4,7 +4,7 @@ DISABLE=false
 
 touch "$MODDIR/skip_mount"
 
-for dir in /cache /data/unencrypted /metadata /presist /mnt/vendor/presist; do
+for dir in /cache /data/unencrypted /metadata /persist /mnt/vendor/persist; do
 if [ -f "$dir/disable_magisk" ]; then
 DISABLE=true
 rm -rf "$dir/disable_magisk"
