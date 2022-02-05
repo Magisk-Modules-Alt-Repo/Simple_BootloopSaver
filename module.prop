@@ -1,6 +1,6 @@
 id=huskydg_bootloopsaver
 name=Magisk Bootloop Protector
-version=v1.4
+version=v1.4-pre-1
 versionCode=10004
 author=HuskyDG
 description=Protect your system from bootloop caused by Magisk modules by turning off all your modules and restart your system if bootloop is detected.
