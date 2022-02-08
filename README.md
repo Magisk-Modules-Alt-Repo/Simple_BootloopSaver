@@ -21,3 +21,5 @@ You can boot into **TWRP** and create a dummy file named `disable_magisk` in one
 - /metadata
 - /persist
 - /mnt/vendor/persist
+
+**NOTE: MAKE SURE ALL PARTITIONS ARE MOUNTED**
