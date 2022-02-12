@@ -22,9 +22,7 @@ You can boot into **TWRP** and create a dummy file named `disable_magisk` in one
 - /persist
 - /mnt/vendor/persist
 
-How to create a file in TWRP?
-
-- Open Terminal Emulator in TWRP and type:
+How to create a file in TWRP? Open Terminal Emulator in TWRP and type:
 
 ```
 touch /cache/disable_magisk
