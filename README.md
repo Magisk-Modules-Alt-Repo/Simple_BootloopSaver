@@ -1,7 +1,8 @@
 # Magisk BootloopSaver
 
+> WARNING: Most of bootloop can be prevented but not completely. The script can be killed by other process, another module or broken Magisk. Magisk should add a function that, when it finds a file created in Custom Recovery (example: /cache/disable_magisk), it fires off all modules.
 ## About
-Protect your system from bootloop caused by Magisk modules. In case the data partition is encrypted and you cannot access `/data/adb/modules`, or you don't want to turn off **force encryption** because when your phone with **force encryption** disabled is stolen, thief can copy your `/data` and your private data will be exposed!!! 
+Protect your system from bootloop caused by Magisk modules. In case the data partition is encrypted and you cannot access `/data/adb/modules`, or you don't want to turn off **force encryption** to protect your private data.
 
 ## Requirements
 - Magisk 20.4+ is installed
