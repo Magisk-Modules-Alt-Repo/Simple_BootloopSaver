@@ -1,6 +1,7 @@
 # Magisk BootloopSaver
 
-> WARNING: Most of bootloop can be prevented but not completely. The script can be killed by other process, another module or broken Magisk. Magisk should add a function that, when it finds a file created in Custom Recovery (example: /cache/disable_magisk), it fires off all modules.
+> WARNING: Most of bootloop can be prevented but not completely. The script can be killed by other process, another module or broken Magisk. 
+
 ## About
 Protect your system from bootloop caused by Magisk modules. In case the data partition is encrypted and you cannot access `/data/adb/modules`, or you don't want to turn off **force encryption** to protect your private data.
 
