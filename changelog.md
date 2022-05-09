@@ -1,2 +1,2 @@
-### v1.5
-- Fix incorrect detection in case there are multiple zygote proccesses
+### v1.6
+- Add patch into boot image that allows you to trigger Safe Mode by using Custom Recovery

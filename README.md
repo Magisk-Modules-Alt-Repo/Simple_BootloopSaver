@@ -1,7 +1,5 @@
 # Magisk BootloopSaver
 
-> WARNING: Most of bootloop can be prevented but not completely. The script can be killed by other process, another module or broken Magisk. 
-
 ## About
 Protect your system from bootloop caused by Magisk modules. In case the data partition is encrypted and you cannot access `/data/adb/modules`, or you don't want to turn off **force encryption** to protect your private data.
 
@@ -19,7 +17,7 @@ Usually, bootloop occurs because zygote doesn't start properly or stuck at resta
 ### Disable from Custom Recovery
 
 
-You can boot into **TWRP** and create a dummy file named `disable_magisk` in one of these location to tell the script disable all modules and reboot your device (if **Auto detect** is not working):
+You can boot into **TWRP** and create a dummy file named `disable_magisk` in one of these location and then reboot to system to boot into Safe Mode (if **Auto detect** is not working):
 - /cache
 - /data/unencrypted
 - /metadata
