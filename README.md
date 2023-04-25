@@ -1,33 +1,31 @@
 # Magisk BootloopSaver
 
+
 ## About
-Protect your system from bootloop caused by Magisk modules. In case the data partition is encrypted and you cannot access `/data/adb/modules`, or you don't want to turn off **force encryption** to protect your private data.
+Protect your system from bootloop caused by Magisk modules.
+In case the data partition is encrypted and you cannot access `/data/adb/modules`, or you don't want to turn off **force encryption** to protect your private data.
+
 
 ## Requirements
 - Magisk 20.4+ is installed
 
+
 ## Installation
 It's Magisk module, flash it in **Magisk** app
+
 
 ## Usage
 
 ### Auto detect
-Usually, bootloop occurs because zygote doesn't start properly or stuck at restarting. The script run in `late_start` mode. It will check Zygote's Process ID 3 times every 15 seconds.  And if Zygote's Process ID doesn't match for 3 times, check the Process ID for next 15 seconds to make sure and if it's different again, the script will disable all modules and reboot the your device.
+Usually, bootloop occurs because zygote doesn't start properly or stuck at restarting.
+The script run in `late_start` mode. It will check Zygote's Process ID 3 times every 15 seconds.
+And if Zygote's Process ID doesn't match for 3 times, check the Process ID for next 15 seconds to make sure and if it's different again, the script will disable all modules and reboot the your device.
 
-### Disable from Custom Recovery
+
+## Known issues
+It may be too eager to Disable all modules and Reboot.
 
 
-You can boot into **TWRP** and create a dummy file named `disable_magisk` in one of these location and then reboot to system to boot into Safe Mode (if **Auto detect** is not working):
-- /cache
-- /data/unencrypted
-- /metadata
-- /persist
-- /mnt/vendor/persist
-
-How to create a file in TWRP? Open Terminal Emulator in TWRP and type:
-
-```
-touch /cache/disable_magisk
-```
-
-**NOTE: MAKE SURE ALL PARTITIONS ARE MOUNTED**
+## Attribution
+Module originally made by HuskyDG, but I didn't like how large it was for something that looked like it could be done in less code, so I forked it and made it into just one script.
+This involved removing the custom recovery parts, but for me the AutoDetect has worked.

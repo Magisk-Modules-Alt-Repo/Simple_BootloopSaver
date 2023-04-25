@@ -1,9 +1,8 @@
-id=huskydg_bootloopsaver
+id=simple_bootloopsaver
 name=Magisk Bootloop Protector
-version=v1.6
-versionCode=10008
-author=HuskyDG
+version=v1
+versionCode=1
+author=ez-me
 description=Protect your system from bootloop caused by Magisk modules by turning off all your modules and restart your system if bootloop is detected.
-updateJson=https://raw.githubusercontent.com/Magisk-Modules-Alt-Repo/HuskyDG_BootloopSaver/master/module.json
-changeBoot=true
+changeBoot=false
 needRamdisk=false

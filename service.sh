@@ -1,65 +1,82 @@
 #!/system/bin/sh
-#Bootloop saver by HuskyDG
+#Bootloop saver by HuskyDG, modified by ez-me
 
-MODDIR=${0%/*}
-. "$MODDIR/utils.sh"
+# Get variables
+MODPATH=${0%/*}
+MESSAGE="$(cat "$MODPATH"/msg.txt | head -c100)"
 
+if [ -n "$(getprop ro.product.cpu.abi | grep 64)" ]
+then
+   ZYGOTE_NAME=zygote64
+else
+   ZYGOTE_NAME=zygote
+fi
 
-rm -rf /cache/bootloop_saver.log.bak
-mv -f /cache/bootloop_saver.log /cache/bootloop_saver.log.bak 2>/dev/null
-write_log "bootloop saver started"
-MAIN_ZYGOTE_NICENAME=zygote
-CPU_ABI=$(getprop ro.product.cpu.api)
-[ "$CPU_ABI" = "arm64-v8a" -o "$CPU_ABI" = "x86_64" ] && MAIN_ZYGOTE_NICENAME=zygote64
+# Log
+log(){
+   TEXT=$@; echo "[`date -Is`]: $TEXT" >> $MODPATH/log.txt
+}
 
-check(){
-TEXT1="$1"
-TEXT2="$2"
-result=false
-for i in $TEXT1; do
-    for j in $TEXT2; do
-        [ "$i" == "$j" ] && result=true
-    done
-done
-$result
+log "Started"
+
+# Modify description
+cp "$MODPATH/module.prop" "$MODPATH/temp.prop"
+sed -Ei "s/^description=(\[.*][[:space:]]*)?/description=[Working. $MESSAGE] /g" "$MODPATH/temp.prop"
+mv "$MODPATH/temp.prop" "$MODPATH/module.prop"
+
+# Define the function
+disable_modules(){
+   log "Disabling modules..."
+   list="$(find /data/adb/modules/* -prune -type d)"
+   for module in $list
+   do
+      touch $module/disable
+   done
+   rm -rf "$MODPATH/disable"
+   echo "Disabled modules at $(date -Is)" > "$MODPATH/msg.txt"
+   rm -rf /cache/.system_booting /data/unencrypted/.system_booting /metadata/.system_booting /persist/.system_booting /mnt/vendor/persist/.system_booting
+   log "Rebooting"
+   reboot
+   exit
 }
 
 
-# Wait for zygote starts
+# Gather PIDs
 sleep 5
+ZYGOTE_PID1=$(pidof "$ZYGOTE_NAME")
+log "PID1: $ZYGOTE_PID1"
 
-ZYGOTE_PID1=$(pidof "$MAIN_ZYGOTE_NICENAME")
-write_log "pid of zygote stage 1: $ZYGOTE_PID1"
 sleep 15
-ZYGOTE_PID2=$(pidof "$MAIN_ZYGOTE_NICENAME")
-write_log "pid of zygote stage 2: $ZYGOTE_PID2"
+ZYGOTE_PID2=$(pidof "$ZYGOTE_NAME")
+log "PID2: $ZYGOTE_PID2"
+
 sleep 15
-ZYGOTE_PID3=$(pidof "$MAIN_ZYGOTE_NICENAME")
-write_log "pid of zygote stage 3: $ZYGOTE_PID3"
+ZYGOTE_PID3=$(pidof "$ZYGOTE_NAME")
+log "PID3: $ZYGOTE_PID3"
 
+# Check for BootLoop
+log "Checking..."
 
-if check "$ZYGOTE_PID1" "$ZYGOTE_PID2" && check "$ZYGOTE_PID2" "$ZYGOTE_PID3"; then
-    if [ -z "$ZYGOTE_PID1" ]; then
-        write_log "maybe zygote not start :("
-        write_log "zygote meets the trouble, disable all modules and restart"
-
-        disable_modules
-    else
-        exit_log "pid of 3 stage zygote is the same"
-    fi
-else
-    write_log "pid of 3 stage zygote is different, continue check to make sure... "
+if [ -z "$ZYGOTE_PID1" ]
+then
+   log "Zygote didn't start?"
+   disable_modules
 fi
 
+if [ "$ZYGOTE_PID1" != "$ZYGOTE_PID2" -o "$ZYGOTE_PID2" != "$ZYGOTE_PID3" ]
+then
+   log "PID mismatch, checking again"
+   sleep 15
+   ZYGOTE_PID4=$(pidof "$ZYGOTE_NAME")
+   log "PID4: $ZYGOTE_PID4"
 
+   if [ "$ZYGOTE_PID3" != "$ZYGOTE_PID4" ]
+   then
+      log "They don't match..."
+      disable_modules
+   fi
+fi
 
-
-sleep 15
-ZYGOTE_PID4=$(pidof "$MAIN_ZYGOTE_NICENAME")
-write_log "pid of zygote stage 4: $ZYGOTE_PID4"
-check "$ZYGOTE_PID3" "$ZYGOTE_PID4" && exit_log "pid of zygote stage 3 and 4 is the same."
-
-write_log "zygote meets the trouble, disable all modules and restart"
-
-disable_modules
-
+# If  we reached this section we should be fine
+log "looks good to me!"
+exit
