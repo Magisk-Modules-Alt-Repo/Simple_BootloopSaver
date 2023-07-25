@@ -36,6 +36,7 @@ disable_modules(){
    echo "Disabled modules at $(date -Is)" > "$MODPATH/msg.txt"
    rm -rf /cache/.system_booting /data/unencrypted/.system_booting /metadata/.system_booting /persist/.system_booting /mnt/vendor/persist/.system_booting
    log "Rebooting"
+   log ""
    reboot
    exit
 }
@@ -70,7 +71,7 @@ then
    ZYGOTE_PID4=$(pidof "$ZYGOTE_NAME")
    log "PID4: $ZYGOTE_PID4"
 
-   if [ "$ZYGOTE_PID3" != "$ZYGOTE_PID4" ]
+   if [ "$ZYGOTE_PID1" != "$ZYGOTE_PID4" ]
    then
       log "They don't match..."
       disable_modules
@@ -79,4 +80,5 @@ fi
 
 # If  we reached this section we should be fine
 log "looks good to me!"
+log """
 exit
